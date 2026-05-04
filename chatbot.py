@@ -22,7 +22,7 @@ try:
     reply=response.text
 
 except Exception as e:
-    reply="Something went wrong. Please try again."
+    reply = f"Error: {e}"
 
 st.session_state.chat_history.append({"role":"assistant","content":reply})
 
