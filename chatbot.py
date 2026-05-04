@@ -29,12 +29,12 @@ if user_prompt:
 
     try:
         response = client.chat.completions.create(
-            model="llama3-8b-8192",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": user_prompt}
-            ]
-        )
+    model="llama3-70b-8192",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": user_prompt}
+    ]
+)
 
         reply = response.choices[0].message.content
 
