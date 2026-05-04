@@ -27,7 +27,7 @@ if user_prompt:
 
     try:
         response = client.chat.completions.create(
-            model="mixtral-8x7b-32768",  # ✅ THIS WORKS
+            model="llama-3.1-8b-instant",  # ✅ THIS WORKS
             messages=st.session_state.chat_history
         )
 
