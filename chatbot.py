@@ -1,27 +1,24 @@
 import streamlit as st
-from openai import OpenAI
+from groq import Groq
 
-# Page setup
 st.set_page_config(page_title="AI Chatbot")
 st.title("AI Chatbot")
 
-# Initialize client
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
-# Initialize chat history
+# initialize chat history
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# Display previous messages
+# display previous messages
 for message in st.session_state.chat_history:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# User input
 user_prompt = st.chat_input("Type your message here...")
 
 if user_prompt:
-    # Store and display user message
+    # show user message
     st.session_state.chat_history.append({
         "role": "user",
         "content": user_prompt
@@ -31,25 +28,21 @@ if user_prompt:
         st.markdown(user_prompt)
 
     try:
-        # API call
-        response = client.responses.create(
-            model="gpt-3.5-turbo",
-            input=user_prompt
+        response = client.chat.completions.create(
+            model="llama3-8b-8192",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": user_prompt}
+            ]
         )
 
-        # Extract response safely
-        reply = ""
-
-        if hasattr(response, "output_text") and response.output_text:
-            reply = response.output_text
-        else:
-            reply = response.output[0].content[0].text
+        reply = response.choices[0].message.content
 
     except Exception as e:
-        st.error(e)  # show actual error on UI
+        st.error(e)
         reply = "Something went wrong"
 
-    # Store and display bot reply
+    # show bot reply
     st.session_state.chat_history.append({
         "role": "assistant",
         "content": reply
