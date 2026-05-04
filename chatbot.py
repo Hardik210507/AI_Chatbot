@@ -33,7 +33,7 @@ if user_prompt:
     try:
         # API call
         response = client.responses.create(
-            model="gpt-4.1-mini",
+            model="gpt-3.5-turbo",
             input=user_prompt
         )
 
