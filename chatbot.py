@@ -1,8 +1,8 @@
 import streamlit as st
 from groq import Groq
 
-st.set_page_config(page_title="AI Chatbot")
-st.title("AI Chatbot")
+st.set_page_config(page_title="VoidBot-AI Chatbot")
+st.title("VoidBot-AI Chatbot")
 
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
@@ -27,7 +27,7 @@ if user_prompt:
 
     try:
         response = client.chat.completions.create(
-            model="llama-3.1-8b-instant",  # ✅ THIS WORKS
+            model="llama-3.1-8b-instant",
             messages=st.session_state.chat_history
         )
 
